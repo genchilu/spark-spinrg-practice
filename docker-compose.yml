@@ -1,0 +1,11 @@
+services:
+  spark-master:
+    image: spark:3.5.0-scala2.12-java17-ubuntu
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    command: sh -c '/opt/spark/sbin/start-master.sh && tail -f /opt/spark/logs/*'
+
+  spark-slave:
+    image: spark:3.5.0-scala2.12-java17-ubuntu
+    command: sh -c '/opt/spark/sbin/start-slave.sh spark://spark-master:7077 && tail -f /opt/spark/logs/*'
